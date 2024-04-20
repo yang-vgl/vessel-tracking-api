@@ -1,0 +1,59 @@
+services:
+  web:
+    image: nginx:1.10.3-alpine
+    container_name: vessel-tracking-api_web
+    working_dir: /var/www
+    ports:
+      - "80:80"
+    volumes:
+      - ../vessel-tracking-api:/var/www:delegated
+      - ./resources/nginx/conf.d:/etc/nginx/conf.d/
+    depends_on:
+      - php83
+      - mysql
+      - redis
+    networks:
+      api-backend:
+        aliases:
+          - api-backend
+
+  php83:
+    build:
+      context: build/php8.3
+    container_name: vessel-tracking-api_php83
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../vessel-tracking-api:/var/www:delegated
+      - ./build/php8.3/cli.ini:/usr/local/etc/php/php-cli.ini
+    depends_on:
+      - mysql
+    networks:
+      - api-backend
+
+  mysql:
+    image: mysql:8.0
+    container_name: vessel-tracking-api_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vessel_tracking_api
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./../tmp/db:/var/lib/mysql
+    networks:
+      - api-backend
+
+  redis:
+    image: redis:7.0.4-alpine
+    container_name: vessel-tracking-api_redis
+    restart: unless-stopped
+    ports:
+      - "6381:6379"
+    networks:
+      - api-backend
+
+networks:
+  api-backend:
+
