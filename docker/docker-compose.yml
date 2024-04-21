@@ -45,6 +45,20 @@ services:
     networks:
       - api-backend
 
+  mysql-test:
+    image: mysql:8.0
+    container_name: vessel-tracking-api_mysql-test
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vessel_tracking_api
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./../tmp/db-test:/var/lib/mysql
+    networks:
+      - api-backend
+
   redis:
     image: redis:7.0.4-alpine
     container_name: vessel-tracking-api_redis

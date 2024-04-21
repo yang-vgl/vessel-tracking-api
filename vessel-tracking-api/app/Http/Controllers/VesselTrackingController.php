@@ -7,6 +7,7 @@ use App\Models\VesselPosition;
 use App\Services\VesselTracking\VesselTrackingResponseMapper;
 use Exception;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use \Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class VesselTrackingController extends Controller
@@ -45,6 +46,8 @@ class VesselTrackingController extends Controller
         try {
             return $this->vesselTrackingResponseMapper->map($contentType, $vesselPositionData);
         } catch (Exception $e) {
+            Log::error($e);
+
             return new Response($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

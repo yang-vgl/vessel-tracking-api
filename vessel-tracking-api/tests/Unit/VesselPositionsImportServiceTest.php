@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\VesselPosition;
 use App\Services\JsonMachineFactory;
 use App\Services\VesselPositionFactory;
 use App\Services\VesselPositionsImportService;
@@ -9,6 +10,7 @@ use ArrayObject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Iterator;
+use Mockery;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -22,6 +24,8 @@ class VesselPositionsImportServiceTest extends TestCase
 
     private ArrayObject|MockObject $itemsMock;
 
+    private VesselPosition|MockObject $vesselPositionModelMock;
+
     private VesselPositionsImportService $subject;
 
     public function setUp(): void
@@ -30,6 +34,7 @@ class VesselPositionsImportServiceTest extends TestCase
         $this->itemsMock = $this->getMockBuilder(ArrayObject::class)->getMock();
         $this->iteratorMock = $this->createMock(Iterator::class);
         $this->vesselPositionFactoryMock = $this->createMock(VesselPositionFactory::class);
+        $this->vesselPositionModelMock = Mockery::mock(VesselPosition::class);
 
         $this->subject = new VesselPositionsImportService(
             $this->jsonMachineFactoryMock,
@@ -68,7 +73,7 @@ class VesselPositionsImportServiceTest extends TestCase
                 ->expects(self::once())
                 ->method('create')
                 ->with($modelData)
-                ->willReturn(true);
+                ->willReturn($this->vesselPositionModelMock);
         } else {
             Log::shouldReceive('error')->andReturnNull();
         }

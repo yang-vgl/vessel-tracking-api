@@ -39,6 +39,12 @@ class VesselTrackingResponseMapper
 
     private function mapToCsv(ContentType $contentType, Collection $data) : Response
     {
+        if ($data->isEmpty() === true) {
+            return response($data->toJson(), Response::HTTP_OK, [
+                'Content-Type' => $contentType->value,
+            ]);
+        }
+
         $tempFile = new SplTempFileObject();
 
         $tempFile->fputcsv(array_keys($data->toArray()[0]));
