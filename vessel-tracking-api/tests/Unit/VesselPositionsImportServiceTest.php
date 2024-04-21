@@ -16,11 +16,11 @@ class VesselPositionsImportServiceTest extends TestCase
 {
     private JsonMachineFactory|MockObject $jsonMachineFactoryMock;
 
-    private MockObject $itemsMock;
-
     private Iterator|MockObject $iteratorMock;
 
     private VesselPositionFactory|MockObject $vesselPositionFactoryMock;
+
+    private ArrayObject|MockObject $itemsMock;
 
     private VesselPositionsImportService $subject;
 
@@ -62,7 +62,8 @@ class VesselPositionsImportServiceTest extends TestCase
             ->willReturn($jsonData);
 
         if ($isValid === true) {
-            DB::shouldReceive('raw')->andReturn('coordinates');
+            DB::shouldReceive('raw')->andReturn("POINT({$jsonData->lon},{$jsonData->lat})");
+
             $this->vesselPositionFactoryMock
                 ->expects(self::once())
                 ->method('create')
@@ -74,7 +75,6 @@ class VesselPositionsImportServiceTest extends TestCase
 
         $this->subject->import();
     }
-
 
     public function provideVesselPositionData(): array
     {
@@ -98,7 +98,7 @@ class VesselPositionsImportServiceTest extends TestCase
                     'status' => 0,
                     'station_id' => 81,
                     'speed' => 180,
-                    'coordinates' => 'coordinates',
+                    'coordinates' => 'POINT(15.4415,42.75178)',
                     'course' =>144,
                     'heading' => 144,
                     'rot' => '',

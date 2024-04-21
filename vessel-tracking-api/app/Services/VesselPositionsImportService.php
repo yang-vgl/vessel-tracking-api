@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\VesselPosition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use JsonMachine\Exception\InvalidArgumentException;
@@ -31,7 +30,7 @@ class VesselPositionsImportService
                     'status' => $vesselPosition->status,
                     'station_id' => $vesselPosition->stationId,
                     'speed' => $vesselPosition->speed,
-                    'coordinates' =>  DB::raw(sprintf('POINT(%f, %f)', $vesselPosition->lon, $vesselPosition->lat)),
+                    'coordinates' => DB::raw(sprintf('POINT(%f, %f)', $vesselPosition->lon, $vesselPosition->lat)),
                     'course' => $vesselPosition->course,
                     'heading' => $vesselPosition->heading,
                     'rot' => $vesselPosition->rot,
@@ -42,6 +41,4 @@ class VesselPositionsImportService
             }
         }
     }
-
-
 }
