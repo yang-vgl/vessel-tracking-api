@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\VesselPositionsImportService;
+use App\Services\VesselPosition\VesselPositionsImportService;
 use Illuminate\Console\Command;
 use JsonMachine\Exception\InvalidArgumentException;
 

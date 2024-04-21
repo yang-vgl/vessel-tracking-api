@@ -3,9 +3,9 @@
 namespace Tests\Unit;
 
 use App\Models\VesselPosition;
-use App\Services\JsonMachineFactory;
-use App\Services\VesselPositionFactory;
-use App\Services\VesselPositionsImportService;
+use App\Services\VesselPosition\JsonMachineFactory;
+use App\Services\VesselPosition\VesselPositionFactory;
+use App\Services\VesselPosition\VesselPositionsImportService;
 use ArrayObject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

@@ -23,7 +23,13 @@ To set up this project, follow the steps below:
    composer install
    ```
 
-5. Run database migrations:
+5. Create env:
+   
+    ```bash
+   cp .env.example .env
+   ```
+   
+6.  Run database migrations:
 
    ```bash
    php artisan migrate
@@ -122,6 +128,7 @@ The API enforces rate limiting to prevent abuse. Each user (identified by IP add
 - **application/json**
 - **application/xml**
 - **text/csv**
+- **application/vnd.api+json**
 
 ### Notes
 
