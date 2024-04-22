@@ -63,6 +63,16 @@ return [
             ]) : [],
         ],
 
+        'mysql_testing' => [
+            'driver' => 'mysql',
+            'host' => env('DB_TEST_HOST', ''),
+            'port' => env('DB_TEST_PORT', ''),
+            'database' => env('DB_TEST_DATABASE', ''),
+            'username' => env('DB_TEST_USERNAME', ''),
+            'password' => env('DB_TEST_PASSWORD', ''),
+            'unix_socket' => env('DB_TEST_SOCKET', ''),
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
